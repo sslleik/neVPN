@@ -1,7 +1,12 @@
 body {
   margin: 0;
+
+  font-family: pusia;
+  background: linear-gradient(to right, #0f0f0f, #272727);
+
   font-family: 'PusiaBold', sans-serif;
   background: linear-gradient(to right, #0f0f0f, #1f1f1f);
+
   color: #ffffff;
   text-align: center;
 }
@@ -174,10 +179,18 @@ footer a:hover {
 
 .plan {
   background: #ffffff0d;
-  padding: 30px;
+  padding: 20px;
   border-radius: 15px;
   width: 250px;
   text-align: center;
+  border: 1px solid transparent;
+  transition: border 0.5ms ease, box-shadow 0.5ms ease;
+}
+
+.plan:hover {
+  border: 1px solid #00ff00;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+  background-color: rgba(0, 255, 0, 0.02); 
 }
 
 .plan h3 {
@@ -291,6 +304,13 @@ footer a:hover {
   display: flex;
   align-items: center;
 }
+@font-face {
+  font-family: 'PusiaBold';
+  src: url('PusiaBold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 @font-face {
   font-family: 'PusiaBold';
   src: url('PusiaBold.otf') format('opentype');
