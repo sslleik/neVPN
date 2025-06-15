@@ -1,7 +1,12 @@
 body {
   margin: 0;
+
   font-family: pusia;
   background: linear-gradient(to right, #0f0f0f, #272727);
+
+  font-family: 'PusiaBold', sans-serif;
+  background: linear-gradient(to right, #0f0f0f, #1f1f1f);
+
   color: #ffffff;
   text-align: center;
 }
@@ -298,6 +303,12 @@ footer a:hover {
 .logo a {
   display: flex;
   align-items: center;
+}
+@font-face {
+  font-family: 'PusiaBold';
+  src: url('PusiaBold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
 }
 
 @font-face {
