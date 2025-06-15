@@ -291,5 +291,11 @@ footer a:hover {
   display: flex;
   align-items: center;
 }
+@font-face {
+  font-family: 'PusiaBold';
+  src: url('PusiaBold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
 
 
