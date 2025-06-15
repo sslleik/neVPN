@@ -1,0 +1,295 @@
+body {
+  margin: 0;
+  font-family: pusia;
+  background: linear-gradient(to right, #0f0f0f, #1f1f1f);
+  color: #ffffff;
+  text-align: center;
+}
+
+header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(50, 50, 50, 0.8);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+}
+
+header a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  font-size: 19px;
+}
+
+header a:hover {
+  color: #00ff66;
+}
+
+.logo {
+  color: #00ff66;
+  margin-right: auto;
+  margin-left: 1px;
+  font-weight: bold;
+}
+
+.main {
+  margin-top: 120px;
+}
+
+.main h1 {
+  font-size: 45px;
+  line-height: 1.5;
+  margin-left: 25px;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+.feature {
+  background: #ffffff0d;
+  border-radius: 10px;
+  padding: 20px;
+  width: 200px;
+}
+
+.feature b {
+  color: #00ff66;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.b {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+section {
+  margin: 80px auto;
+  max-width: 1000px;
+  padding: 0 20px;
+}
+
+section h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+  color: #00ff66;
+}
+
+.benefit-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.benefit {
+  background: #ffffff0d;
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+  text-align: left;
+}
+
+.benefit h3 {
+  color: #fff;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.benefit p {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.faq-item {
+  background: lab(100% 0.01 -0.01 / 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.faq-item h4 {
+  color: #00ff66;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.faq-item p {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+a {
+  color: #00ff66;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #ffffff0d;
+  margin-top: 40px;
+}
+
+footer a {
+  color: #3498db;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.plans {
+  padding: 80px 20px;
+}
+
+.plans h2 {
+  color: #00ff66;
+  font-size: 2.5em;
+  margin-bottom: 40px;
+}
+
+.plan-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.plan {
+  background: #ffffff0d;
+  padding: 30px;
+  border-radius: 15px;
+  width: 250px;
+  text-align: center;
+}
+
+.plan h3 {
+  color: #00ff66;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.plan ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #00ff66;
+  color: #000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #00cc55;
+}
+
+.instructions {
+  padding: 80px 20px;
+  color: #fff;
+}
+
+.instructions h2 {
+  color: #00ff66;
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.rule {
+  margin-bottom: 30px;
+  background: #ffffff0d;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.rule h3 {
+  color: #00ff66;
+  margin-bottom: 10px;
+}
+
+.rule p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.videos h3 {
+  margin: 40px 0 20px;
+  color: #00ff66;
+  text-align: center;
+}
+
+.video-block {
+  margin-bottom: 30px;
+}
+
+.video-block p {
+  margin-bottom: 10px;
+}
+
+.instructions a {
+  color: #00ff66;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.scroll-up {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #00ff66;
+  color: #000;
+  text-decoration: none;
+  border-radius: 50%;
+  padding: 12px 18px;
+  font-size: 24px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 999;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-up:hover {
+  background-color: #00cc55;
+}
+
+.logo-img {
+  height: 32px;
+  vertical-align: middle;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+}
+
+
