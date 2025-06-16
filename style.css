@@ -1,14 +1,11 @@
 body {
   margin: 0;
-
   font-family: pusia;
   background: linear-gradient(to right, #0f0f0f, #272727);
-
-  font-family: 'PusiaBold', sans-serif;
-  background: linear-gradient(to right, #0f0f0f, #1f1f1f);
-
   color: #ffffff;
   text-align: center;
+  scroll-behavior: smooth;
+  
 }
 
 header {
@@ -63,19 +60,21 @@ header a:hover {
   flex-wrap: wrap;
   margin-top: 50px;
   gap: 20px;
+  font-size: 20px;
 }
 
 .feature {
   background: #ffffff0d;
   border-radius: 10px;
   padding: 20px;
-  width: 200px;
+  width: 250px;
 }
 
 .feature b {
   color: #00ff66;
   display: block;
   margin-bottom: 10px;
+  font-size: 25px;
 }
 
 .b {
@@ -106,19 +105,22 @@ section h2 {
   background: #ffffff0d;
   padding: 20px;
   border-radius: 12px;
-  width: 280px;
+  width: 350px;
   text-align: left;
+  
 }
 
 .benefit h3 {
   color: #fff;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 25px;
+  color: #00ff66;
 }
 
 .benefit p {
   font-size: 15px;
   line-height: 1.4;
+  font-size: 20px;
 }
 
 .faq-item {
@@ -132,11 +134,11 @@ section h2 {
 .faq-item h4 {
   color: #00ff66;
   margin-bottom: 8px;
-  font-size: 18px;
+  font-size: 25px;
 }
 
 .faq-item p {
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.4;
 }
 
@@ -153,13 +155,15 @@ footer {
 }
 
 footer a {
-  color: #3498db;
+  color: #3498dba6;
 }
 
 footer a:hover {
   text-decoration: underline;
 }
-
+footer p {
+  color: #b4b4b498;
+}
 .plans {
   padding: 80px 20px;
 }
@@ -176,15 +180,19 @@ footer a:hover {
   justify-content: center;
   gap: 30px;
 }
+.plans li {
+  font-size: 20px;
+}
 
 .plan {
   background: #ffffff0d;
   padding: 20px;
   border-radius: 15px;
-  width: 250px;
+  width: 270px;
   text-align: center;
   border: 1px solid transparent;
   transition: border 0.5ms ease, box-shadow 0.5ms ease;
+  font-size: 20px;
 }
 
 .plan:hover {
@@ -199,8 +207,10 @@ footer a:hover {
 }
 
 .price {
-  font-size: 24px;
+  font-size: 25px;
   margin-bottom: 20px;
+  color: #ffffff;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
 
 .plan ul {
@@ -249,11 +259,13 @@ footer a:hover {
 .rule h3 {
   color: #00ff66;
   margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .rule p {
   margin: 0;
   line-height: 1.6;
+  font-size: 17px;
 }
 
 .videos h3 {
@@ -304,6 +316,7 @@ footer a:hover {
   display: flex;
   align-items: center;
 }
+
 @font-face {
   font-family: 'PusiaBold';
   src: url('PusiaBold.otf') format('opentype');
@@ -311,11 +324,62 @@ footer a:hover {
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'PusiaBold';
-  src: url('PusiaBold.otf') format('opentype');
+.nav-link {
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.nav-link.active {
+  color: #ffffff;
   font-weight: bold;
-  font-style: normal;
+  text-shadow: 0 0 5px #00ffcc, 0 0 1px #61f1d5;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+  }
+
+  .nav-link {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+  }
+
+  .logo-img {
+    width: 120px;
+    margin-bottom: 10px;
+  }
+
+  .main h1 {
+    font-size: 24px;
+    padding: 0 10px;
+  }
+
+  .plan-cards {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  .plan {
+    width: 100%;
+  }
+
+  footer {
+    font-size: 13px;
+  }
+
+  .scroll-up {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
 
