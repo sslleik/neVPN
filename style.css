@@ -327,7 +327,7 @@ footer p {
 }
 
 .logo-img {
-  height: 20px;
+  height: 28px;
   vertical-align: middle;
 }
 
@@ -347,7 +347,7 @@ footer p {
   color: white;
   padding: 10px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 20px;
   
 }
 
@@ -436,6 +436,29 @@ footer p {
     bottom: 20px;
     right: 20px;
   }
+  .logo-img {
+  height: 20px;
+  vertical-align: middle;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+}
+.nav-link {
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  font-size: 12px;
+  
+}
+
+.nav-link.active {
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ffcc, 0 0 1px #61f1d5;
+  
+}
 }
 
 
