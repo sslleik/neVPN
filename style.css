@@ -327,7 +327,7 @@ footer p {
 }
 
 .logo-img {
-  height: 32px;
+  height: 28px;
   vertical-align: middle;
 }
 
@@ -347,60 +347,82 @@ footer p {
   color: white;
   padding: 10px;
   text-decoration: none;
+  font-size: 17px;
+  
 }
 
 .nav-link.active {
   color: #ffffff;
   font-weight: bold;
   text-shadow: 0 0 5px #00ffcc, 0 0 1px #61f1d5;
+  
 }
 
 /* оптимизация под телефон */
 
 @media (max-width: 768px) {
   header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between; 
-    padding: 10px 20px;
-    gap: 15px;
-    flex-wrap: wrap; 
-    border-radius: 25px;
+    background: #ffffff0d;
+    padding: 10px 16px;
+    border-radius: 16px;
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 95vw;
+    width: max-content;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    scrollbar-width: none;
   }
 
-  .nav-link {
+  header::-webkit-scrollbar {
+    display: none;
+  }
+
+  header a {
+    font-size: 14px;
+    padding: 6px 10px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s;
+    white-space: nowrap;
+  }
+
+  header a:hover {
+    background: rgba(0, 255, 102, 0.1);
+    color: #00ff66;
+  }
+
+  .plan-cards {
     display: flex;
-    flex-wrap: wrap;
-    font-size: 16px;
-    
+    flex-direction: row; /* Горизонтально */
+    overflow-x: auto;
+    gap: 16px;
+    padding: 10px 10px;
+    scroll-snap-type: x mandatory;
   }
 
-  .logo-img {
-    width: 90px;
-    margin-bottom: 10px;
+  .plan {
+    flex: 0 0 auto;
+    width: 260px;
+    max-width: 80vw;
+    scroll-snap-align: center;
   }
 
   .main h1 {
     font-size: 40px;
     padding: 0 10px;
-  }
-
-  .plan-cards {
-    display: flex;           
-    flex-direction: column;  
-    gap: 30px;
-    padding: 0 10px;
-    justify-content: center; 
-    align-items: center;     
-    width: 100%;             
-  }
-
-  .plan {
-    width: 300px;            
-    max-width: 90vw;         
-    box-sizing: border-box;
-    text-align: center;
-    flex-shrink: 0;          
   }
 
   footer {
@@ -413,15 +435,9 @@ footer p {
     font-size: 20px;
     bottom: 20px;
     right: 20px;
-    
   }
-  @font-face {
-  font-family: 'PusiaBold';
-  src: url('PusiaBold.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
 }
-}
+
 
 
 
