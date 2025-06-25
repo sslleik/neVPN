@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: pusia;
+  font-family: 'PusiaBold', sans-serif;
   background: linear-gradient(to right, #0f0f0f, #272727);
   color: #ffffff;
   text-align: center;
@@ -339,10 +339,7 @@ footer p {
 @font-face {
   font-family: 'PusiaBold';
   src: url('PusiaBold.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
 }
-
 .nav-link {
   color: white;
   padding: 10px;
@@ -465,8 +462,6 @@ footer p {
 @font-face {
   font-family: 'PusiaBold';
   src: url('PusiaBold.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
 }
 }
 
