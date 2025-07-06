@@ -418,7 +418,10 @@ footer p {
     max-width: 80vw;
     scroll-snap-align: center;
   }
-
+.main {
+  margin-top: 120px;
+  text-align: center;
+}
   .main h1 {
     font-size: 40px;
     padding: 0 10px;
