@@ -6,13 +6,14 @@
   <title>Блог neVPN</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    
     @font-face {
   font-family: 'Pusia';
   src: url('PusiaBold.otf') format('opentype');
   font-weight: bold;
 }
     body {
-      background: #111;
+      background: linear-gradient(to right, #0f0f0f, #272727);
       color: #ffffff;
       font-family: Pusia, sans-serif;
       margin: 0; padding: 0;
@@ -65,27 +66,32 @@
     }
 
     /* Адаптив */
-    @media (max-width: 800px) {
-      .blog-container {
-        flex-direction: column;
-      }
-      iframe.article-frame {
-        width: 100%;
-        height: 700px;
-        margin-top: 20px;
-      }
-      nav.articles-menu {
-        width: 100%;
-        min-width: auto;
-        flex-direction: row;
-        justify-content: center;
-        gap: 15px;
-      }
-      nav.articles-menu a {
-        padding: 10px 15px;
-        font-size: 16px;
-      }
-    }
+   @media (max-width: 800px) {
+  .blog-container {
+    flex-direction: column;
+    margin: 20px auto 40px;
+  }
+  nav.articles-menu {
+    width: 100%;
+    min-width: auto;
+    flex-direction: column;
+    padding: 10px 5px;
+    align-items: center; /* центрируем кнопки */
+  }
+  nav.articles-menu a {
+    width: 80%; /* все кнопки одинаковой ширины, например 80% от ширины меню */
+    max-width: 300px; /* максимальная ширина, чтобы не были слишком широкими */
+    padding: 15px 0;
+    font-size: 18px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  iframe.article-frame {
+    width: 100%;
+    height: 700px;
+    margin-top: 15px;
+  }
+}
   </style>
 </head>
 <body>
@@ -98,11 +104,12 @@
     <a href="tech.html" class="nav-link">инструкция</a>
     <a href="blog.html" class="nav-link active">блог</a>
   </header>
-<br><br>
+<br><br><br>
   <div class="blog-container">
     <nav class="articles-menu">
       <a href="article1.html" target="articleFrame">Что такое протокол VLESS и как он работает</a>
-      <a href="article2.html" target="articleFrame">Закон о штрафах и отслеживание VLESS</a>
+      <a href="article2.html" target="articleFrame">Закон о штрафах и отслеживание VLESS \ ВПН</a>
+    <a href="article3.html" target="articleFrame">Современные вызовы и стратегии защиты в интернете</a>
     </nav>
 
     <iframe
@@ -113,5 +120,8 @@
       loading="lazy"
     ></iframe>
   </div>
+  <footer>
+    <p>&copy; Company sslleik | Все права защищены<br><br>Мой тгк: <a class="fer" href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a></p>
+  </footer>
 </body>
 </html>
