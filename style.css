@@ -3,6 +3,14 @@
    Система переменных, темы, доступность
    ====================================== */
 
+@font-face {
+  font-family: "PusiaBold";
+  src: url("PusiaBold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Цвета по умолчанию (тёмная тема) */
   --bg-body: #0b0c0e;
@@ -34,6 +42,15 @@
 
   --ts-fast: 160ms ease;
   --ts: 240ms ease;
+}
+
+/* Акцентное применение кастомного шрифта */
+.brand,
+.hero h1,
+h2,
+h3,
+.price {
+  font-family: "PusiaBold", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 /* Светлая тема */
