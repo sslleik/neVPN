@@ -1,93 +1,204 @@
-<html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>neVPN — Быстро. Безопасно. Анонимно.</title>
 
-  <title>neVPN</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- Подключение стилей -->
+  <link rel="stylesheet" href="style.css" />
+  
 </head>
+
 <body>
   <a id="top"></a>
 
-  <header>
-    <div class="logo">
-  <a href="index.html">
-    <img src="выа.svg" alt="neVPN" class="logo-img">
-  </a>
-</div>
-    <a href="index.html" class="nav-link active">главная</a>
-    <a href="fuc.html" class="nav-link">тарифы</a>
-    <a href="tech.html" class="nav-link">инструкция</a>
-    <a href="blog.html" class="nav-link">статьи</a>
+  <!-- ШАПКА -->
+  <header class="site-header" role="banner">
+    <div class="header-inner container">
+      <a class="logo" href="index.html">
+        
+        <span class="brand">neVPN</span>
+      </a>
+
+      <nav class="nav" aria-label="Главное меню">
+        <a class="nav-link active" href="index.html">Главная</a>
+        <a class="nav-link" href="fuc.html">Тарифы</a>
+        <a class="nav-link" href="tech.html">Инструкция</a>
+        <a class="nav-link" href="blog.html">Статьи</a>
+      </nav>
+
+      <div class="controls">
+        <button id="menuToggle" class="btn ghost menu-toggle" aria-label="Меню" aria-controls="primary-nav" aria-expanded="false">☰</button>
+        <button id="speedTestBtn" class="btn ghost">Тест скорости</button>
+        <button id="themeToggle" class="btn" title="Переключить тему">🌙</button>
+      </div>
+    </div>
   </header>
 
-  <br><br><br><br><br><br><br><br><br><br>
+  <!-- ГЛАВНЫЙ КОНТЕНТ -->
+  <main>
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero-content">
+        <h1>⚡ Быстро · 🔒 Безопасно · 🕶 Анонимно</h1>
+        <p class="lead">neVPN — приватный VPN с высокой скоростью, простой настройкой и политикой без логов.</p>
 
-  <div class="main">
-    <h1>⚡ Быстрый 💰 Дешёвый<br>🔒 Безопасный 🕶 Анонимный</h1>
+        <div class="hero-actions">
+          <a class="btn primary large" href="fuc.html">Выбрать тариф</a>
+          <a class="btn ghost" href="#about">Узнать больше</a>
+        </div>
 
-    <br><br><br><br><br><br><br><br><br><br>
-
-    <div class="features">
-      <div class="feature">
-        <b class="b">Быстрый</b>
-        Ноль лагов и задержек максимальная скорость 
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-number" data-target="12845">0</div>
+            <div class="stat-label">активных пользователей</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="26">0</div>
+            <div class="stat-label">страны</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" data-target="99">0</div>
+            <div class="stat-label">uptime %</div>
+          </div>
+        </div>
       </div>
-      <div class="feature">
-        <b class="b">Дешевый</b>
-        Максимальная защита за минимальные деньги
-      </div>
-      <div class="feature">
-        <b class="b">Безопасный</b>
-        Надёжное шифрование защищает твои данные
-      </div>
-      <div class="feature">
-        <b class="b">Анонимный</b>
-        Не собирает логов, никто о тебе не узнает
-      </div>
-    </div>
-  </div>
 
-  <section class="benefits">
-    <h2>Почему выбирают neVPN?</h2>
-    <br><br>
-    <div class="benefit-list">
-      <div class="benefit">
-        <h3>🌍 Глобальные серверы</h3>
-        
-        <p>Много серверов по всей Европе — подключайся в один клик.</p>
+      <div class="hero-visual">
+        <div class="feature-card">
+          <h3>Безопасное подключение</h3>
+          <p>256-битное шифрование • No-logs • Поддержка VLESS и WireGuard</p>
+        </div>
       </div>
-      <div class="benefit">
-        <h3>📱 Кроссплатформенность</h3>
-        <p>Работает на Windows, Android, iOS, Mac и даже в браузере.</p>
+    </section>
+
+    <!-- О НАС -->
+    <section id="about" class="about container">
+      <h2>О сервисе</h2>
+      <p>neVPN сочетает скорость, стабильность и приватность. Простые тарифы, видео-гайды и поддержка 24/7 в Telegram.</p>
+      <div class="features">
+        <article class="feature-card">
+          <h4>Глобальные сервера</h4>
+          <p>Минимальная задержка и высокая пропускная способность.</p>
+        </article>
+        <article class="feature-card">
+          <h4>Кроссплатформенность</h4>
+          <p>Windows, macOS, Android, iOS и браузеры.</p>
+        </article>
+        <article class="feature-card">
+          <h4>Прозрачные цены</h4>
+          <p>Без скрытых платежей. Оплата картой или Telegram.</p>
+        </article>
+        <article class="feature-card">
+          <h4>Поддержка 24/7</h4>
+          <p>Помогаем через видео-гайды и Telegram-чат.</p>
+        </article>
       </div>
-      <div class="benefit">
-        <h3>🛡 Без логов</h3>
-        <p>Мы не собираем и не храним информацию о тебе. Никогда.</p>
+    </section>
+
+    <!-- ПРЕИМУЩЕСТВА -->
+    <section class="benefits container">
+      <h2>Почему выбирают neVPN</h2>
+      <div class="benefit-grid">
+        <div class="benefit">
+          <h3>🔒 Без логов</h3>
+          <p>Не храним историю подключений и трафик пользователей.</p>
+        </div>
+        <div class="benefit">
+          <h3>⚡ Высокая скорость</h3>
+          <p>Оптимизированные маршруты и современные протоколы.</p>
+        </div>
+        <div class="benefit">
+          <h3>🌍 Множество локаций</h3>
+          <p>Выбор страны в один клик, стабильное соединение.</p>
+        </div>
+        <div class="benefit">
+          <h3>🛡 TOR и анти-DPI</h3>
+          <p>Обход DPI и TOR для максимальной анонимности.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="faq">
-    <h2>Часто задаваемые вопросы</h2>
-    <br><br>
-    <div class="faq-item">
-      <h4>Как подключиться к VPN?</h4>
-      <p>Скачай приложение, и нажми кнопку «Подключиться» — готово! Все инструкции можно прочить в вкладке <a href="tech.html">инструкции!</a> </p><br>
-    </div>
-    <div class="faq-item">
-      <h4>Можно ли использовать на нескольких устройствах?</h4>
-      <p>Да, на расширенных тарифах — до 3 устройств одновременно.</p><br>
-    </div>
-  </section>
+    <!-- ТАРИФЫ -->
+    <section class="plans container">
+      <h2>Тарифы</h2>
+      <p class="lead">Простые и честные планы. Первый день — бесплатно.</p>
+      <div class="plan-cards">
+        <article class="plan">
+          <div class="plan-header">
+            <h3>Плюс</h3>
+            <div class="price">349₽ <span class="period">/ месяц</span></div>
+          </div>
+          <ul>
+            <li>До 4 устройств одновременно</li>
+            <li>Анти‑DPI + TOR режим</li>
+            <li>Приоритетная поддержка 24/7</li>
+          </ul>
+          <p class="note">Лучший баланс скорости, приватности и цены.</p>
+          <a class="btn primary" href="https://t.me/sslleik_vd" target="_blank">Подключить</a>
+        </article>
 
+        <article class="plan popular">
+          <div class="badge">Популярно</div>
+          <div class="plan-header">
+            <h3>Старт</h3>
+            <div class="price">199₽ <span class="period">/ месяц</span></div>
+          </div>
+          <ul>
+            <li>До 2 устройств одновременно</li>
+            <li>Безлимитный трафик</li>
+            <li>Базовая поддержка в Telegram</li>
+          </ul>
+          <p class="note">Идеально для начала и повседневного использования.</p>
+          <a class="btn primary" href="https://t.me/sslleik_vd" target="_blank">Подключить</a>
+        </article>
 
-  
-  <a href="#top" class="scroll-up">↑</a>
+        <article class="plan">
+          <div class="plan-header">
+            <h3>Профи</h3>
+            <div class="price">899₽ <span class="period">/ месяц</span></div>
+          </div>
+          <ul>
+            <li>Неограниченное число устройств</li>
+            <li>Выделенные высокоскоростные сервера</li>
+            <li>Персональный менеджер и SLA</li>
+          </ul>
+          <p class="note">Максимальная производительность и поддержка для требовательных.</p>
+          <a class="btn primary" href="https://t.me/sslleik_vd" target="_blank">Подключить</a>
+        </article>
+      </div>
+    </section>
 
-  <footer>
-    <p>&copy; Company sslleik | Все права защищены<br><br>Мой тгк: <a class="fer" href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a></p>
+    <!-- КОНТАКТЫ -->
+    <section class="contact container">
+      <h2>Связаться с нами</h2>
+      <p>Оставьте сообщение — ответим в Telegram (демо-форма).</p>
+
+      <form id="contactForm" class="contact-form">
+        <input type="text" name="name" placeholder="Ваше имя" required />
+        <input type="email" name="email" placeholder="Email (необязательно)" />
+        <textarea name="message" placeholder="Сообщение" required></textarea>
+
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Отправить</button>
+          <a class="btn ghost" href="https://t.me/sslleik_vd" target="_blank">Telegram</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- КНОПКА ВВЕРХ -->
+  <a class="scroll-up" href="#top">↑</a>
+
+  <!-- ПОДВАЛ -->
+  <footer class="site-footer">
+    <p>&copy; neVPN — Все права защищены. Поддержка: 
+      <a href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a>
+    </p>
   </footer>
+
+  <!-- Скрипты -->
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,151 +1,87 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Блог neVPN</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Статьи — neVPN</title>
+
   <link rel="stylesheet" href="style.css" />
-  <style>
-    
-    @font-face {
-  font-family: 'Pusia';
-  src: url('PusiaBold.otf') format('opentype');
-  font-weight: bold;
-}
-footer {
-  text-align: center;
-  padding: 15px;
-  background: #ffffff0d;
-  margin-top: 20px;
-  font-size: 12px;
-}
-
-footer a {
-  color: #3498dba6;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-footer p {
-  color: #b4b4b498;
-}
-    body {
-      background: linear-gradient(to right, #0f0f0f, #272727);
-      color: #ffffff;
-      font-family: Pusia, sans-serif;
-      margin: 0; padding: 0;
-      font-size: 20px;
-    }
-    .blog-container {
-      max-width: 900px;
-      margin: 60px auto 80px;
-      padding: 0 15px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: nowrap;
-    }
-    nav.articles-menu {
-      width: 25%; /* примерно 25% ширины */
-      min-width: 200px;
-      background: #222;
-      border-radius: 8px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    nav.articles-menu a {
-      display: inline-block;
-      background-color: #00ff66;
-      color: #111;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 12px 20px;
-      border-radius: 6px;
-      text-align: center;
-      transition: background-color 0.3s, color 0.3s;
-      user-select: none;
-      box-shadow: 0 3px 6px rgba(0, 255, 102, 0.5);
-    }
-    nav.articles-menu a:hover,
-    nav.articles-menu a:focus {
-      background-color: #00cc52;
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(0, 204, 82, 0.8);
-    }
-    iframe.article-frame {
-      width: 73%; /* примерно 73% ширины */
-      height: 80vh; /* 80% высоты окна браузера */
-      border: none;
-      background: #222;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00ff66aa;
-    }
-
-    /* Адаптив */
-   @media (max-width: 800px) {
-  .blog-container {
-    flex-direction: column;
-    margin: 20px auto 40px;
-  }
-  nav.articles-menu {
-    width: 100%;
-    min-width: auto;
-    flex-direction: column;
-    padding: 10px 5px;
-    align-items: center; /* центрируем кнопки */
-  }
-  nav.articles-menu a {
-    width: 80%; /* все кнопки одинаковой ширины, например 80% от ширины меню */
-    max-width: 300px; /* максимальная ширина, чтобы не были слишком широкими */
-    padding: 15px 0;
-    font-size: 18px;
-    text-align: center;
-    box-sizing: border-box;
-  }
-  iframe.article-frame {
-    width: 100%;
-    height: 700px;
-    margin-top: 15px;
-  }
-}
-  </style>
+  
 </head>
+
 <body>
-  <header>
-    <div class="logo">
-      <a href="index.html"><img src="выа.svg" alt="neVPN" class="logo-img" /></a>
+  <a id="top"></a>
+
+  <!-- ШАПКА -->
+  <header class="site-header" role="banner">
+    <div class="header-inner container">
+      <a class="logo" href="index.html">
+        
+        <span class="brand">neVPN</span>
+      </a>
+
+      <nav class="nav" aria-label="Главное меню">
+        <a class="nav-link" href="index.html">Главная</a>
+        <a class="nav-link" href="fuc.html">Тарифы</a>
+        <a class="nav-link" href="tech.html">Инструкция</a>
+        <a class="nav-link active" href="blog.html">Статьи</a>
+      </nav>
+
+      <div class="controls">
+        <button id="menuToggle" class="btn ghost menu-toggle" aria-label="Меню" aria-controls="primary-nav" aria-expanded="false">☰</button>
+        <button id="speedTestBtn" class="btn ghost">Тест скорости</button>
+        <button id="themeToggle" class="btn" title="Переключить тему">🌙</button>
+      </div>
     </div>
-    <a href="index.html" class="nav-link">главная</a>
-    <a href="fuc.html" class="nav-link">тарифы</a>
-    <a href="tech.html" class="nav-link">инструкция</a>
-    <a href="blog.html" class="nav-link active">статьи</a>
   </header>
-  <br><br><br><br><br><br><br>
 
-  <div class="main">
-    <h1>🔒Статьи по Интернет Безопасности🔒</h1>
+  <!-- ГЛАВНЫЙ КОНТЕНТ -->
+  <main class="container">
+    <section class="hero" style="padding-top:150px;">
+      <h1>📰 Блог neVPN</h1>
+      <p class="lead">Читайте полезные статьи о безопасности, технологиях и анонимности в интернете.</p>
+    </section>
 
-    <br><br><br><br><br><br><br>
-  <div class="blog-container">
-    <nav class="articles-menu">
-      <a href="article1.html" target="articleFrame">Что такое протокол VLESS и как он работает</a>
-      <a href="article2.html" target="articleFrame">Закон о штрафах и отслеживание VLESS \ ВПН</a>
-    <a href="article3.html" target="articleFrame"> Стратегии защиты в интернете</a>
-    </nav>
+    <!-- ФРЕЙМ С СО СтАТЬЯМИ -->
+    <section class="articles-frame">
+      <div class="frame">
+        <div class="frame-header">
+          <div class="dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span>neVPN • Статьи</span>
+          <span></span>
+        </div>
+        <iframe src="articles.html" title="Статьи neVPN" loading="lazy"></iframe>
+      </div>
+    </section>
 
-    <iframe
-      name="articleFrame"
-      class="article-frame"
-      src="article1.html"
-      title="Статьи блога"
-      loading="lazy"
-    ></iframe>
-  </div>
-  <a href="#top" class="scroll-up">↑</a>
-  <footer>
-    <p>&copy; Company sslleik | Все права защищены<br><br>Мой тгк: <a class="fer" href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a></p>
+    <!-- ПОДПИСКА -->
+    <section class="contact">
+      <h2>📬 Подписаться на обновления</h2>
+      <p>Оставьте почту, чтобы получать новые статьи и советы по кибербезопасности.</p>
+
+      <form id="subscribeForm" class="contact-form">
+        <input type="email" name="email" placeholder="Ваш email" required />
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Подписаться</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- КНОПКА ВВЕРХ -->
+  <a class="scroll-up" href="#top">↑</a>
+
+  <!-- ПОДВАЛ -->
+  <footer class="site-footer">
+    <p>&copy; neVPN — Все права защищены. Поддержка: 
+      <a href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a>
+    </p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

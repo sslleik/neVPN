@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Статьи — Встроенный список</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { padding: 16px; }
+    .articles-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .article-card { background: var(--bg-elev-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; }
+    .article-card h3 { margin: 0 0 8px 0; font-size: 18px; }
+    .article-card p { color: var(--text-muted); margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <section>
+    <h2>Свежие статьи</h2>
+    <div class="articles-list">
+      <article class="article-card">
+        <h3>Что такое VPN и как он работает</h3>
+        <p>Базовые принципы, преимущества и реальные сценарии использования VPN.</p>
+        <a class="btn ghost" href="#">Читать</a>
+      </article>
+      <article class="article-card">
+        <h3>Протоколы VPN: WireGuard vs OpenVPN</h3>
+        <p>Сравниваем скорость, безопасность и простоту настройки двух популярных протоколов.</p>
+        <a class="btn ghost" href="#">Читать</a>
+      </article>
+      <article class="article-card">
+        <h3>Обход DPI: как мы это делаем</h3>
+        <p>Разбираем механизмы глубокого анализа пакетов и методы обхода блокировок.</p>
+        <a class="btn ghost" href="#">Читать</a>
+      </article>
+      <article class="article-card">
+        <h3>Выбор серверной локации</h3>
+        <p>Где лучше подключаться для стриминга, игр и повседневной работы.</p>
+        <a class="btn ghost" href="#">Читать</a>
+      </article>
+      <article class="article-card">
+        <h3>Безопасность в мессенджерах</h3>
+        <p>Как защитить переписку и почему VPN важен даже для чатов.</p>
+        <a class="btn ghost" href="#">Читать</a>
+      </article>
+    </div>
+  </section>
+</body>
+</html>

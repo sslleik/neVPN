@@ -1,80 +1,126 @@
-<html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="ру">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тарифы — neVPN</title>
 
-  <title>neVPN</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  
 </head>
+
 <body>
   <a id="top"></a>
 
-  <header>
-    <div class="logo">
-  <a href="index.html">
-    <img src="выа.svg" alt="neVPN" class="logo-img">
-  </a>
-</div>
-    <a href="index.html" class="nav-link">главная</a>
-    <a href="fuc.html" class="nav-link active">тарифы</a>
-    <a href="tech.html" class="nav-link">инструкция</a>
-    <a href="blog.html" class="nav-link">статьи</a>
+  <!-- ШАПКА -->
+  <header class="site-header" role="banner">
+    <div class="header-inner container">
+      <a class="logo" href="index.html">
+        
+        <span class="brand">neVPN</span>
+      </a>
+
+      <nav class="nav" aria-label="Главное меню">
+        <a class="nav-link" href="index.html">Главная</a>
+        <a class="nav-link active" href="fuc.html">Тарифы</a>
+        <a class="nav-link" href="tech.html">Инструкция</a>
+        <a class="nav-link" href="blog.html">Статьи</a>
+      </nav>
+
+      <div class="controls">
+        <button id="menuToggle" class="btn ghost menu-toggle" aria-label="Меню" aria-controls="primary-nav" aria-expanded="false">☰</button>
+        <button id="speedTestBtn" class="btn ghost">Тест скорости</button>
+        <button id="themeToggle" class="btn" title="Переключить тему">🌙</button>
+      </div>
+    </div>
   </header>
-  
-<br><br><br><br><br><br><br><br><br><br>
 
-  <div class="main">
-  <h1>📦 Простой выбор 💵 Прозрачные цены<br>⏳ 30 дней доступа — без подводных камней</h1>
-  <br><br><br><br><br><br>
-</div>
+  <!-- ГЛАВНЫЙ КОНТЕНТ -->
+  <main class="container">
+    <section class="hero" style="padding-top:150px;">
+      <div class="hero-content">
+        <h1>💼 Наши тарифы</h1>
+        <p class="lead">Выберите подходящий план — безопасность и скорость под вашим контролем.</p>
+      </div>
+    </section>
 
-<section class="plans">
-  <h2>Выбери свой тариф</h2>
-  <div class="plan-cards">
-    <div class="plan">
-      <h3>Базовый</h3>
-      <p class="price">200₽ / месяц</p>
-      <ul>
-        <li>2 устройства</li>
-        <li>Безлимитная скорость</li>
-        <li>Безлимитный трафик</li>
-        <li>Макс стабильность</li>
-      </ul>
-      <a href="https://t.me/sslleik" target="_blank" class="btn">Подключить</a>
-    </div>
+    <!-- Блок тарифов -->
+    <section class="plans">
+      <div class="plan-cards">
+        <article class="plan">
+          <div class="plan-header">
+            <h3>Плюс</h3>
+            <div class="price">349₽ <span class="period">/ месяц</span></div>
+          </div>
+          <ul>
+            <li>До 4 устройств одновременно</li>
+            <li>Анти‑DPI + TOR режим</li>
+            <li>Приоритетная поддержка 24/7</li>
+          </ul>
+          <p class="note">Лучший баланс скорости, приватности и цены.</p>
+          <a class="btn primary" href="https://t.me/sslleik_vd" target="_blank">Подключить</a>
+        </article>
 
-    <div class="plan">
-      <h3>Премиум</h3>
-      <p class="price">350₽ / месяц</p>
-      <ul>
-        <li>До 4 устройств</li>
-        <li>Безлимитная скорость</li>
-        <li>Безлимитный трафик</li>
-        <li>Поддержка 24/7</li>
-      </ul>
-      <a href="https://t.me/sslleik" target="_blank" class="btn">Подключить</a>
-    </div>
+        <article class="plan popular">
+          <div class="badge">Популярно</div>
+          <div class="plan-header">
+            <h3>Старт</h3>
+            <div class="price">199₽ <span class="period">/ месяц</span></div>
+          </div>
+          <ul>
+            <li>До 2 устройств одновременно</li>
+            <li>Безлимитный трафик</li>
+            <li>Базовая поддержка в Telegram</li>
+          </ul>
+          <p class="note">Идеально для начала и повседневного использования.</p>
+          <a class="btn primary" href="https://t.me/sslleik_vd" target="_blank">Подключить</a>
+        </article>
 
-    <div class="plan">
-      <h3>Ultimate</h3>
-      <p class="price">1000₽ / месяц</p>
-      <ul>
-        <li>Бесконечность устройств</li>
-        <li>Максимальная скорость</li>
-        <li>Премиум-поддержка</li>
-        <li>Анонимность + TOR</li>
-      </ul>
-      <a href="https://t.me/sslleik" target="_blank" class="btn">Подключить</a>
-    </div>
-  </div>
-</section>
+        <article class="plan">
+          <div class="plan-header">
+            <h3>Профи</h3>
+            <div class="price">899₽ <span class="period">/ месяц</span></div>
+          </div>
+          <ul>
+            <li>Неограниченное число устройств</li>
+            <li>Выделенные высокоскоростные сервера</li>
+            <li>Персональный менеджер и SLA</li>
+          </ul>
+          <p class="note">Максимальная производительность и поддержка для требовательных.</p>
+          <a class="btn primary" href="https://t.me/sslleik_vd" target="_blank">Подключить</a>
+        </article>
+      </div>
+    </section>
 
+    <!-- Дополнительная информация -->
+    <section class="about">
+      <h2>💡 Как выбрать тариф?</h2>
+      <p class="lead">
+        • Для личного использования подойдёт <b>Старт</b> — удобно и недорого.<br />
+        • <b>Плюс</b> — лучший выбор для постоянных пользователей, TOR и анти-DPI включены.<br />
+        • <b>Профи</b> — для бизнеса и профессионалов: максимальная скорость и отдельные сервера.
+      </p>
+    </section>
 
-<a href="#top" class="scroll-up">↑</a>
-  
-<footer>
-    <p>&copy; Company sslleik | Все права защищены<br><br>Мой тгк: <a class="fer" href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a></p>
+    <!-- Призыв к действию -->
+    <section class="contact">
+      <h2>Готовы начать?</h2>
+      <p>Подключитесь уже сегодня и получите 1 день бесплатно для теста.</p>
+      <a class="btn primary large" href="https://t.me/sslleik_vd" target="_blank">Перейти в Telegram</a>
+    </section>
+  </main>
+
+  <!-- КНОПКА ВВЕРХ -->
+  <a class="scroll-up" href="#top">↑</a>
+
+  <!-- ПОДВАЛ -->
+  <footer class="site-footer">
+    <p>&copy; neVPN — Все права защищены. Поддержка: 
+      <a href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a>
+    </p>
   </footer>
+
+  <!-- Скрипты -->
+  <script src="script.js"></script>
 </body>
 </html>
