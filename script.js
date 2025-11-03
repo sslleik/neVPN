@@ -99,4 +99,82 @@ document.addEventListener("DOMContentLoaded", () => {
       contactForm.reset();
     });
   }
+
+  // 🔹 Тест скорости сети + рикролл
+  const speedBtn = document.getElementById("speedTestBtn");
+  if (speedBtn) {
+    const showToast = (text) => {
+      let toast = document.getElementById("speedToast");
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "speedToast";
+        toast.style.position = "fixed";
+        toast.style.left = "50%";
+        toast.style.bottom = "24px";
+        toast.style.transform = "translateX(-50%)";
+        toast.style.zIndex = "2000";
+        toast.style.background = "rgba(0,0,0,0.7)";
+        toast.style.color = "#fff";
+        toast.style.padding = "10px 14px";
+        toast.style.borderRadius = "10px";
+        toast.style.backdropFilter = "blur(6px)";
+        document.body.appendChild(toast);
+      }
+      toast.textContent = text;
+      toast.style.opacity = "1";
+      clearTimeout(toast._h);
+      toast._h = setTimeout(() => { toast.style.opacity = "0"; }, 4000);
+    };
+
+    const testSpeed = async () => {
+      const TEST_URL = "https://speed.hetzner.de/100MB.bin"; // публичный файл для замера
+      const controller = new AbortController();
+      const timeoutMs = 6000; // ограничим до ~6 секунд
+      const start = performance.now();
+      let loaded = 0;
+
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const resp = await fetch(TEST_URL, { signal: controller.signal, cache: "no-store" });
+        if (!resp.ok || !resp.body) throw new Error("Network error");
+        const reader = resp.body.getReader();
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          loaded += value.byteLength;
+          if (loaded > 8 * 1024 * 1024) { // 8MB достаточно
+            controller.abort();
+          }
+        }
+      } catch (_) {
+        // abort ожидаем
+      } finally {
+        clearTimeout(timeout);
+      }
+
+      const elapsed = (performance.now() - start) / 1000; // сек
+      const mbps = (loaded * 8) / (elapsed * 1e6);
+      return { mbps };
+    };
+
+    speedBtn.addEventListener("click", async () => {
+      if (speedBtn.disabled) return;
+      const prevText = speedBtn.textContent;
+      speedBtn.disabled = true;
+      speedBtn.textContent = "Измерение...";
+      try {
+        const { mbps } = await testSpeed();
+        const rounded = Math.max(0, mbps).toFixed(1);
+        showToast(`Скорость: ${rounded} Мбит/с`);
+        // Рикролл — откроем в новой вкладке
+        window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank", "noopener,noreferrer");
+      } catch (e) {
+        showToast("Не удалось измерить скорость");
+        window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank", "noopener,noreferrer");
+      } finally {
+        speedBtn.textContent = prevText;
+        speedBtn.disabled = false;
+      }
+    });
+  }
 });
