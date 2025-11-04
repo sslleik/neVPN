@@ -3,46 +3,269 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Статьи — Встроенный список</title>
+  <title>Статьи — neVPN</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body { padding: 16px; }
-    .articles-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .article-card { background: var(--bg-elev-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; }
-    .article-card h3 { margin: 0 0 8px 0; font-size: 18px; }
-    .article-card p { color: var(--text-muted); margin-bottom: 12px; }
+  body { padding: 16px; }
+  .articles-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .article-card { background: var(--bg-elev-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; }
+  .article-card h3 { margin: 0 0 8px 0; font-size: 18px; }
+  .article-card p { color: var(--text-muted); margin-bottom: 12px; }
+  .article { display: none; max-width: 900px; margin: 0 auto; }
+  .article h1 { font-size: clamp(22px, 3vw, 30px); color: var(--accent); margin-bottom: 12px; }
+  .article h2 { margin-top: 20px; }
+  .article hr { border: 0; border-top: 1px solid var(--border); margin: 18px 0; }
+  .article table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  .article table th, .article table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+  .article .note { color: var(--text-muted); }
+  .back-btn { position: fixed; right: 16px; bottom: 16px; z-index: 10; display: none; }
+  .topics { display: block; }
   </style>
 </head>
 <body>
-  <section>
+  <section class="topics">
     <h2>Свежие статьи</h2>
     <div class="articles-list">
       <article class="article-card">
         <h3>Что такое VPN и как он работает</h3>
         <p>Базовые принципы, преимущества и реальные сценарии использования VPN.</p>
-        <a class="btn ghost" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Читать</a>
+        <a class="btn ghost" href="#vpn">Читать</a>
       </article>
       <article class="article-card">
-        <h3>Протоколы VPN: WireGuard vs OpenVPN</h3>
+        <h3>Протоколы VPN: WireGuard vs VLESS</h3>
         <p>Сравниваем скорость, безопасность и простоту настройки двух популярных протоколов.</p>
-        <a class="btn ghost" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Читать</a>
+        <a class="btn ghost" href="#wg-vless">Читать</a>
       </article>
       <article class="article-card">
-        <h3>Обход DPI: как мы это делаем</h3>
-        <p>Разбираем механизмы глубокого анализа пакетов и методы обхода блокировок.</p>
-        <a class="btn ghost" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Читать</a>
+        <h3>Обход DPI: как это работает — концептуальный обзор</h3>
+        <p>Ключевые понятия DPI и общие подходы к повышению устойчивости соединений.</p>
+        <a class="btn ghost" href="#dpi">Читать</a>
       </article>
       <article class="article-card">
         <h3>Выбор серверной локации</h3>
         <p>Где лучше подключаться для стриминга, игр и повседневной работы.</p>
-        <a class="btn ghost" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Читать</a>
+        <a class="btn ghost" href="#locations">Читать</a>
       </article>
       <article class="article-card">
         <h3>Безопасность в мессенджерах</h3>
         <p>Как защитить переписку и почему VPN важен даже для чатов.</p>
-        <a class="btn ghost" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Читать</a>
+        <a class="btn ghost" href="#messengers">Читать</a>
       </article>
     </div>
   </section>
+
+  <section id="vpn" class="article">
+    <h1>Что такое VPN и как он работает</h1>
+    <p class="note">Базовые принципы, преимущества и реальные сценарии использования</p>
+    <hr />
+    <h2>Введение</h2>
+    <p>Интернет сегодня — это не просто пространство общения и информации. Это огромная сеть, где ваши данные могут стать добычей для провайдеров, хакеров и даже государств. Каждый клик, каждое подключение оставляет след. Поэтому вопрос <strong>безопасности и анонимности</strong> становится решающим. Решение — <strong>VPN</strong>, технология, создающая надёжный цифровой щит между вами и внешним миром.</p>
+    <h2>Что такое VPN</h2>
+    <p><strong>VPN (Virtual Private Network)</strong> — виртуальная частная сеть, создающая защищённое соединение между вашим устройством и интернетом. Все данные проходят через <strong>зашифрованный туннель</strong>, что делает их невидимыми для посторонних. Также VPN маскирует ваш <strong>реальный IP-адрес</strong>, подменяя его адресом сервера в другой стране.</p>
+    <h2>Как работает VPN — простыми словами</h2>
+    <ol>
+      <li>Вы подключаетесь к VPN-серверу.</li>
+      <li>Ваш трафик шифруется (например, с использованием современных протоколов и TLS/XTLS/Reality при VLESS).</li>
+      <li>Данные передаются через защищённый туннель.</li>
+      <li>VPN-сервер перенаправляет запросы в интернет и возвращает ответы вам.</li>
+    </ol>
+    <p>Даже при попытке перехвата наблюдатель увидит лишь зашифрованный поток данных.</p>
+    <h2>Главный протокол: VLESS</h2>
+    <h3>Что такое VLESS</h3>
+    <p><strong>VLESS (VMess Less)</strong> — современный, лёгкий и безопасный протокол для платформы Xray-core. Он пришёл на смену VMess и устранил его уязвимости, обеспечивая надёжность, скорость и скрытность.</p>
+    <h3>Основные особенности VLESS</h3>
+    <ul>
+      <li><strong>Безопасность уровня enterprise.</strong> Минималистичный протокол без встроенной авторизации, устойчив к подделке трафика.</li>
+      <li><strong>Поддержка TLS и Reality.</strong> Устойчивость к DPI, маскировка под обычный HTTPS.</li>
+      <li><strong>Высокая скорость.</strong> Низкие накладные расходы, стабильность даже в слабых сетях.</li>
+      <li><strong>Гибкость.</strong> Транспорты TCP, gRPC, WebSocket, XTLS под разные сценарии.</li>
+    </ul>
+    <p><strong>Итог:</strong> на сегодня VLESS считается одним из самых безопасных и технологичных протоколов для VPN: обеспечивает анонимность, обходит блокировки и почти не теряет скорость.</p>
+    <h2>Преимущества использования VPN с VLESS</h2>
+    <ul>
+      <li><strong>Интеллектуальная защита.</strong> Трафик неотличим от HTTPS.</li>
+      <li><strong>Скорость без потерь.</strong> Минимальные накладные расходы.</li>
+      <li><strong>Обход цензуры.</strong> Стабильная работа даже при продвинутой фильтрации.</li>
+      <li><strong>Анонимность.</strong> Без логов, скрытие IP.</li>
+      <li><strong>Совместимость.</strong> Windows, Android, macOS, Linux, iOS (через Xray/Clash/3X-UI).</li>
+    </ul>
+    <h2>Реальные сценарии</h2>
+    <ul>
+      <li>Защита в публичном Wi‑Fi.</li>
+      <li>Доступ к заблокированным сайтам.</li>
+      <li>Онлайн‑игры и стабильность соединения.</li>
+      <li>Удалённая работа и доступ к системам.</li>
+      <li>Защита переписки от слежки и корреляции по метаданным.</li>
+    </ul>
+    <h2>Недостатки</h2>
+    <ul>
+      <li>Требуется настройка или панель управления (например, 3X‑UI).</li>
+      <li>Не все старые устройства поддерживают Reality и XTLS.</li>
+      <li>Бесплатные сервисы могут применять уязвимые конфигурации.</li>
+    </ul>
+    <h2>Заключение</h2>
+    <p>VPN — ваш цифровой щит, а <strong>VLESS — его стальной каркас</strong>. С ним вы получаете скорость, анонимность и устойчивость к блокировкам.</p>
+  </section>
+
+  <section id="wg-vless" class="article">
+    <h1>Протоколы VPN: WireGuard vs VLESS</h1>
+    <p class="note">Сравнение скорости, безопасности и простоты настройки</p>
+    <hr />
+    <h2>1) Принцип работы</h2>
+    <h3>WireGuard</h3>
+    <p>Лёгкий и быстрый протокол VPN с современной криптографией. В ряде сетей РФ соединение часто блокируется или нестабильно из‑за распознаваемости трафика DPI.</p>
+    <h3>VLESS</h3>
+    <p>Разработан для Xray‑core, маскирует VPN‑трафик под обычный HTTPS, поддерживает Reality/XTLS/gRPC. Стабилен и незаметен даже при агрессивной цензуре.</p>
+    <h2>2) Скорость и производительность</h2>
+    <table>
+      <thead><tr><th>Параметр</th><th>WireGuard</th><th>VLESS</th></tr></thead>
+      <tbody>
+        <tr><td>Скорость</td><td>Высокая, но в РФ часто блокируется</td><td>Чуть ниже, но стабильна</td></tr>
+        <tr><td>Пинг</td><td>Минимальный вне РФ</td><td>Немного выше, без обрывов</td></tr>
+        <tr><td>Восстановление</td><td>Отличное, если работает</td><td>Зависит от транспорта, стабильно</td></tr>
+      </tbody>
+    </table>
+    <h2>3) Безопасность и анонимность</h2>
+    <table>
+      <thead><tr><th>Параметр</th><th>WireGuard</th><th>VLESS</th></tr></thead>
+      <tbody>
+        <tr><td>Шифрование</td><td>Noise (ChaCha20‑Poly1305)</td><td>TLS/XTLS/Reality</td></tr>
+        <tr><td>Хранение IP</td><td>Требует фиксированного IP</td><td>Не требует, следов не оставляет</td></tr>
+        <tr><td>Защита от DPI</td><td>Ограничена</td><td>Маскировка под HTTPS</td></tr>
+      </tbody>
+    </table>
+    <h2>4) Простота настройки</h2>
+    <table>
+      <thead><tr><th>Параметр</th><th>WireGuard</th><th>VLESS</th></tr></thead>
+      <tbody>
+        <tr><td>Установка</td><td>Очень простая</td><td>Сложнее (Reality/XTLS)</td></tr>
+        <tr><td>Панели</td><td>GUI есть</td><td>3X‑UI, X‑UI и др.</td></tr>
+        <tr><td>Гибкость</td><td>Минимальная</td><td>Максимальная</td></tr>
+      </tbody>
+    </table>
+    <h2>Вывод</h2>
+    <p>WireGuard — быстрый и удобный, но в РФ часто непригоден. <strong>VLESS</strong> — гибкий и устойчивый к блокировкам: надёжный выбор для сложных сетей.</p>
+  </section>
+
+  <section id="dpi" class="article">
+    <h1>Обход DPI: как это работает — концептуальный обзор</h1>
+    <p class="note">Объясняем на уровне идей, без пошаговых инструкций</p>
+    <hr />
+    <h2>Что такое DPI — кратко</h2>
+    <p>DPI анализирует трафик не только по заголовкам, но и по содержимому/паттернам (размеры пакетов, интервалы, TLS‑параметры). Цели: классификация, выявление прокси/VPN, блокировки, сбор метаданных.</p>
+    <h3>Признаки, на которые смотрят</h3>
+    <ul>
+      <li>SNI и параметры TLS (цепочки, версии, расширения).</li>
+      <li>Структура/последовательность пакетов (тайминги, размеры).</li>
+      <li>Статистические признаки потока и поведенческие маркеры.</li>
+      <li>Сигнатуры известных протоколов.</li>
+    </ul>
+    <h2>Категории подходов к повышению устойчивости</h2>
+    <ul>
+      <li><strong>Маскировка под HTTPS</strong>: корректный TLS‑стек, стандартные поведения.</li>
+      <li><strong>Транспортная маскировка</strong>: HTTP/WebSocket/gRPC и мультиплексирование.</li>
+      <li><strong>Статистическая обфускация</strong>: padding, дробление, задержки.</li>
+      <li><strong>Доверенная инфраструктура</strong>: проксирование через CDN/облака.</li>
+      <li><strong>Современный TLS</strong>: снижение уникальности фингерпринтов, ECH.</li>
+      <li><strong>Мульти‑уровневое проксирование</strong>: цепочки реле.</li>
+    </ul>
+    <h2>Ограничения</h2>
+    <ul>
+      <li>Многофакторный анализ: одного трюка мало.</li>
+      <li>Накладные расходы на задержки/CPU/сложность.</li>
+      <li>Игра в кошки‑мышки: сигнатуры обновляются.</li>
+    </ul>
+    <h2>Ответственный подход</h2>
+    <ul>
+      <li>Корректный TLS, актуальные сертификаты.</li>
+      <li>Минимизация метаданных и продуманная лог‑политика.</li>
+      <li>Мониторинг доступности и план на случай блокировок.</li>
+      <li>Безопасность инфраструктуры и юридическая осведомлённость.</li>
+      <li>Информирование пользователей о рисках и правах.</li>
+    </ul>
+  </section>
+
+  <section id="locations" class="article">
+    <h1>Выбор серверной локации</h1>
+    <p class="note">Где лучше подключаться для стриминга, игр и повседневной работы</p>
+    <hr />
+    <p>Наши сервера расположены в двух странах: <strong>Амстердам (Нидерланды)</strong> и <strong>Рига (Латвия)</strong>. Обе локации безопасны и стабильны, но у каждой свои сильные стороны.</p>
+    <ul>
+      <li><strong>Рига (Латвия)</strong> — рекомендуемая и обычно самая быстрая локация. Ближе к России, ниже задержка, выше скорость. Идеально для игр, стриминга и повседневной работы.</li>
+      <li><strong>Амстердам (Нидерланды)</strong> — хороший выбор для максимальной приватности и нейтральной европейской зоны: просмотр контента, загрузки, зарубежные сервисы.</li>
+    </ul>
+    <p><strong>Итог:</strong> для большинства пользователей лучше выбрать сервер в Риге. Амстердам — запасной вариант для задач, где важны гео‑особенности или повышенная конфиденциальность.</p>
+  </section>
+
+  <section id="messengers" class="article">
+    <h1>Безопасность в мессенджерах</h1>
+    <p class="note">Как защитить переписку и почему VPN важен даже для чатов</p>
+    <hr />
+    <p>Даже если мессенджер заявляет «сквозное шифрование», уязвимыми остаются метаданные, IP‑адрес, геолокация и доверие к серверам приложения. В ряде стран трафик мессенджеров отслеживается или частично блокируется.</p>
+    <p>VPN с протоколом <strong>VLESS</strong> скрывает сам факт использования мессенджера: внешние наблюдатели видят лишь зашифрованный HTTPS‑подобный поток.</p>
+    <h2>Что даёт VPN при работе с мессенджерами</h2>
+    <ul>
+      <li>Сокрытие IP‑адреса.</li>
+      <li>Обход блокировок популярных сервисов.</li>
+      <li>Защита в публичных Wi‑Fi.</li>
+      <li>Снижение риска перехвата и трекинга действий.</li>
+    </ul>
+    <p><strong>Итог:</strong> даже при наличии шифрования в приложении VPN остаётся последним барьером, гарантирующим приватность связи.</p>
+  </section>
+
+  <a href="#topics" class="btn primary back-btn" id="backBtn">Назад к темам</a>
+
+  <script>
+  // Синхронизация темы с родителем (на случай, если родитель загрузился раньше/позже)
+  (function(){
+    try {
+      var parentRoot = window.parent && window.parent.document && window.parent.document.documentElement;
+      var mode = parentRoot ? parentRoot.getAttribute('data-theme') : null;
+      var root = document.documentElement;
+      if (mode === 'light') root.setAttribute('data-theme','light'); else root.removeAttribute('data-theme');
+    } catch(_) {}
+  })();
+
+  (function(){
+    var topics = document.querySelector('.topics');
+    var articles = Array.prototype.slice.call(document.querySelectorAll('.article'));
+    var backBtn = document.getElementById('backBtn');
+
+    function showList(){
+      topics.style.display = 'block';
+      articles.forEach(function(a){ a.style.display = 'none'; });
+      backBtn.style.display = 'none';
+    }
+
+    function showArticle(id){
+      var target = document.getElementById(id);
+      if(!target){ showList(); return; }
+      topics.style.display = 'none';
+      articles.forEach(function(a){ a.style.display = (a.id === id ? 'block' : 'none'); });
+      backBtn.style.display = 'inline-flex';
+    }
+
+    function routeFromHash(){
+      var h = (location.hash || '').replace('#','');
+      if(!h || h === 'topics'){ showList(); }
+      else { showArticle(h); }
+    }
+
+    document.addEventListener('click', function(e){
+      var link = e.target.closest('a[href^="#"]');
+      if(!link) return;
+      var id = link.getAttribute('href').replace('#','');
+      if(!id) return;
+      e.preventDefault();
+      history.pushState(null, '', '#' + id);
+      routeFromHash();
+    });
+
+    window.addEventListener('hashchange', routeFromHash);
+    backBtn.addEventListener('click', function(e){ e.preventDefault(); history.pushState(null,'','#topics'); routeFromHash(); });
+    document.addEventListener('DOMContentLoaded', routeFromHash);
+    routeFromHash();
+  })();
+  </script>
 </body>
 </html>

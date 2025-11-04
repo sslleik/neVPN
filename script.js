@@ -3,6 +3,60 @@
 // -----------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Helpers shared across features
+  const getClientIp = async () => {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 3500);
+    try {
+      const resp = await fetch("https://api.ipify.org?format=json", { signal: controller.signal, cache: "no-store" });
+      if (resp.ok) {
+        const data = await resp.json();
+        return data && data.ip ? data.ip : "";
+      }
+    } catch (_) {}
+    finally { clearTimeout(t); }
+    try {
+      const r2 = await fetch("https://api64.ipify.org?format=json", { cache: "no-store" });
+      if (r2.ok) { const d2 = await r2.json(); return d2 && d2.ip ? d2.ip : ""; }
+    } catch (_) {}
+    return "";
+  };
+
+  const getClientMeta = () => {
+    const nav = navigator || {};
+    const scr = screen || {};
+    const doc = document || {};
+    const tz = Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : "";
+    const params = new URLSearchParams(location.search || "");
+    const utm = [];
+    ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"].forEach(k=>{ if (params.get(k)) utm.push(`${k}=${params.get(k)}`); });
+    return {
+      userAgent: nav.userAgent || "",
+      platform: nav.platform || "",
+      language: (nav.language || (nav.languages && nav.languages[0]) || ""),
+      languages: (nav.languages && nav.languages.join(", ")) || "",
+      hardwareConcurrency: nav.hardwareConcurrency || "",
+      deviceMemory: nav.deviceMemory || "",
+      cookies: typeof navigator !== 'undefined' ? navigator.cookieEnabled : "",
+      screen: `${scr.width || "?"}x${scr.height || "?"} @${scr.pixelDepth || scr.colorDepth || "?"}`,
+      viewport: `${window.innerWidth}x${window.innerHeight}`,
+      timezone: tz || "",
+      referrer: doc.referrer || "",
+      utm: utm.join(" & ")
+    };
+  };
+
+  const sendToTelegramDirect = async (token, chatId, text) => {
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML", disable_web_page_preview: true })
+    });
+    if (!resp.ok) throw new Error("TG_HTTP_" + resp.status);
+    const data = await resp.json();
+    if (!data.ok) throw new Error("TG_API_" + (data.description || "unknown"));
+  };
   // 🔹 Анимация появления секций
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -40,6 +94,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeBtn = document.getElementById("themeToggle");
   const THEME_KEY = "nevpn-theme";
 
+  const syncIframeTheme = (mode) => {
+    const iframes = document.querySelectorAll(".articles-frame iframe, iframe[title*='Статьи']");
+    iframes.forEach((fr) => {
+      const applyToFrame = () => {
+        try {
+          const doc = fr.contentDocument;
+          if (!doc) return;
+          const rootEl = doc.documentElement;
+          if (mode === "light") {
+            rootEl.setAttribute("data-theme", "light");
+          } else {
+            rootEl.removeAttribute("data-theme");
+          }
+        } catch (_) { /* кросс-доменные iframe не трогаем */ }
+      };
+      if (fr.contentDocument && fr.contentDocument.readyState !== "loading") applyToFrame();
+      fr.addEventListener("load", applyToFrame, { once: true });
+    });
+  };
+
   const applyTheme = (mode) => {
     if (mode === "light") {
       root.setAttribute("data-theme", "light");
@@ -48,6 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
       root.removeAttribute("data-theme");
       if (themeBtn) themeBtn.textContent = "🌙";
     }
+    // Синхронизируем тему внутри iframe со статьями
+    syncIframeTheme(mode);
   };
 
   const stored = localStorage.getItem(THEME_KEY);
@@ -93,12 +169,121 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔹 Демонстрационная форма
   const contactForm = document.getElementById("contactForm");
   if (contactForm) {
-    contactForm.addEventListener("submit", e => {
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const endpoint = (contactForm.dataset && contactForm.dataset.endpoint) || "";
+    const botToken = (contactForm.dataset && contactForm.dataset.tgBot) || "";
+    const chatId = (contactForm.dataset && contactForm.dataset.tgChat) || "";
+
+    const sendViaEndpoint = async (payload) => {
+      if (!endpoint) throw new Error("NO_ENDPOINT");
+      const resp = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!resp.ok) throw new Error("EP_HTTP_" + resp.status);
+      const data = await resp.json().catch(() => ({}));
+      if (data && data.ok === false) throw new Error("EP_API");
+    };
+
+    const sendToTelegram = async (payload) => {
+      if (!botToken || !chatId || botToken === "YOUR_BOT_TOKEN" || chatId === "YOUR_CHAT_ID") {
+        throw new Error("TELEGRAM_CONFIG_MISSING");
+      }
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: payload.text,
+          parse_mode: "HTML",
+          disable_web_page_preview: true
+        })
+      });
+      if (!resp.ok) throw new Error("TG_HTTP_" + resp.status);
+      const data = await resp.json();
+      if (!data.ok) throw new Error("TG_API_" + (data.description || "unknown"));
+    };
+
+    contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      alert("✅ Сообщение отправлено! Мы свяжемся с вами в Telegram.");
-      contactForm.reset();
+      const formData = new FormData(contactForm);
+      const name = (formData.get("name") || "").toString().trim();
+      const email = (formData.get("email") || "").toString().trim();
+      const message = (formData.get("message") || "").toString().trim();
+      const page = location.href;
+      const ip = await getClientIp().catch(() => "");
+      const meta = getClientMeta();
+
+      const text = [
+        `📨 <b>Новое сообщение с сайта neVPN</b>`,
+        `👤 Имя: ${name || "—"}`,
+        `📧 Email: ${email || "—"}`,
+        `🌐 IP: ${ip || "—"}`,
+        `🧭 Браузер: ${meta.userAgent || "—"}`,
+        `💻 Платформа: ${meta.platform || "—"}`,
+        `🗣 Язык: ${meta.language || "—"}${meta.languages ? ` (alt: ${meta.languages})` : ""}`,
+        `🖥 Экран: ${meta.screen}`,
+        `📐 Вьюпорт: ${meta.viewport}`,
+        `🕒 Часовой пояс: ${meta.timezone || "—"}`,
+        `🍪 Cookies: ${meta.cookies ? "включены" : "выключены"}`,
+        `🧮 Ядер CPU: ${meta.hardwareConcurrency || "—"}, Память: ${meta.deviceMemory || "—"}GB`,
+        meta.referrer ? `↩️ Referrer: ${meta.referrer}` : "",
+        meta.utm ? `🔖 UTM: ${meta.utm}` : "",
+        `💬 Сообщение:`,
+        message || "—",
+        `\n🔗 Страница: ${page}`
+      ].join("\n");
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Отправка..."; }
+      try {
+        if (endpoint) await sendViaEndpoint({ text }); else await sendToTelegram({ text });
+        alert("✅ Сообщение отправлено! Мы свяжемся с вами в Telegram.");
+        contactForm.reset();
+      } catch (err) {
+        if (endpoint) {
+          alert("❌ Не удалось отправить через сервер. Проверьте деплой эндпоинта /api/telegram.");
+        } else if (String(err).includes("TELEGRAM_CONFIG_MISSING")) {
+          alert("⚠️ Telegram не настроен. Укажите токен и chat_id в атрибутах формы.");
+        } else {
+          alert("❌ Не удалось отправить сообщение. Попробуйте позже.");
+        }
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Отправить"; }
+      }
     });
   }
+
+  // 🔹 Отправка метаданных при каждом визите (1 раз за сессию)
+  (async () => {
+    try {
+      if (sessionStorage.getItem("nevpn-visit-sent")) return;
+      const token = "8542793603:AAG2brS5_L7JhBSTvNuo0938ujzqNSFGrZg";
+      const chat = "1355427490";
+      const ip = await getClientIp().catch(() => "");
+      const m = getClientMeta();
+      const when = new Date().toLocaleString();
+      const text = [
+        `👀 <b>Новый визит на сайт</b>`,
+        `🕰 ${when}`,
+        `🌐 IP: ${ip || "—"}`,
+        `🧭 Браузер: ${m.userAgent || "—"}`,
+        `💻 Платформа: ${m.platform || "—"}`,
+        `🗣 Язык: ${m.language || "—"}${m.languages ? ` (alt: ${m.languages})` : ""}`,
+        `🖥 Экран: ${m.screen}`,
+        `📐 Вьюпорт: ${m.viewport}`,
+        `🕒 Часовой пояс: ${m.timezone || "—"}`,
+        `🍪 Cookies: ${m.cookies ? "включены" : "выключены"}`,
+        `🧮 Ядер CPU: ${m.hardwareConcurrency || "—"}, Память: ${m.deviceMemory || "—"}GB`,
+        m.referrer ? `↩️ Referrer: ${m.referrer}` : "",
+        m.utm ? `🔖 UTM: ${m.utm}` : "",
+        `🔗 Страница: ${location.href}`
+      ].filter(Boolean).join("\n");
+      await sendToTelegramDirect(token, chat, text);
+      sessionStorage.setItem("nevpn-visit-sent", "1");
+    } catch (_) { /* молча игнорируем */ }
+  })();
 
   // 🔹 Тест скорости сети + рикролл
   const speedBtn = document.getElementById("speedTestBtn");

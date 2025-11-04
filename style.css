@@ -524,6 +524,22 @@ input:invalid, textarea:invalid { box-shadow: 0 0 0 2px color-mix(in oklab, #ff3
   /* Фрейм со статьями: пониже минимальная высота */
   .articles-frame iframe { height: 60vh; min-height: 320px; }
 
+  /* Фрейм со статьями: во всю ширину экрана на мобильных */
+  .articles-frame {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+  .articles-frame .frame {
+    padding: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+  .articles-frame iframe {
+    width: 100vw;
+    border-radius: 0;
+  }
+
   /* Кнопка вверх чуть выше от нижнего края */
   .scroll-up { bottom: 80px; }
 }
