@@ -239,8 +239,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Отправка..."; }
       try {
         if (endpoint) await sendViaEndpoint({ text }); else await sendToTelegram({ text });
-        alert("✅ Сообщение отправлено! Мы свяжемся с вами в Telegram.");
-        contactForm.reset();
+      alert("✅ Сообщение отправлено! Мы свяжемся с вами в Telegram.");
+      contactForm.reset();
       } catch (err) {
         if (endpoint) {
           alert("❌ Не удалось отправить через сервер. Проверьте деплой эндпоинта /api/telegram.");
