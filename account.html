@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Личный кабинет — neVPN</title>
+  <link rel="preload" href="PusiaBold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a id="top"></a>
+  <header class="site-header" role="banner">
+    <div class="header-inner container">
+      <a class="logo" href="index.html">
+        <span class="brand">neVPN</span>
+      </a>
+      <nav class="nav" aria-label="Главное меню">
+        <a class="nav-link" href="index.html">Главная</a>
+        <a class="nav-link" href="fuc.html">Тарифы</a>
+        <a class="nav-link" href="tech.html">Инструкция</a>
+        <a class="nav-link" href="blog.html">Статьи</a>
+        <a class="nav-link active" href="account.html">Кабинет</a>
+      </nav>
+      <div class="controls">
+        <button id="menuToggle" class="btn ghost menu-toggle" aria-label="Меню" aria-controls="primary-nav" aria-expanded="false">☰</button>
+        <button id="themeToggle" class="btn" title="Переключить тему">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" style="padding-top:120px;">
+      <h1>Личный кабинет</h1>
+      <p class="lead">Временно не работает — мы уже чиним. Напишите нам в Telegram: <a class="nav-link" href="https://t.me/sslleik" target="_blank">@sslleik</a>.</p>
+    </section>
+
+    <section id="authSection" style="display:none;">
+      <div class="features">
+        <article class="feature-card">
+          <h3>Вход</h3>
+          <form id="loginForm" class="contact-form">
+            <input type="text" name="email" placeholder="Юзер Telegram" required />
+            <input type="password" name="password" placeholder="Пароль" required />
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Войти</button>
+            </div>
+          </form>
+        </article>
+        <article class="feature-card">
+          <h3>Регистрация</h3>
+          <form id="registerForm" class="contact-form">
+            <input type="text" name="name" placeholder="Имя" required />
+            <input type="text" name="email" placeholder="Юзер Telegram" required />
+            <input type="password" name="password" placeholder="Пароль" required />
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Создать аккаунт</button>
+            </div>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section id="accountSection" style="display:none;">
+      <div class="features">
+        <article class="feature-card">
+          <h3>Профиль</h3>
+          <p><strong>Имя:</strong> <span id="acc_name">—</span></p>
+          <p><strong>Telegram:</strong> <span id="acc_email">—</span></p>
+          <div class="form-actions">
+            <button id="logoutBtn" class="btn ghost">Выйти</button>
+          </div>
+        </article>
+        <article class="feature-card">
+          <h3>Подписка на обновления</h3>
+          <form id="subscribeUserForm" class="contact-form">
+            <input type="text" name="email" placeholder="Ваш юзер Telegram" required />
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Подписаться</button>
+            </div>
+          </form>
+          <p class="note">Подписки сохраняются локально в браузере.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Закладки статей</h3>
+          <ul id="favList" style="list-style:none; padding-left:0; margin:0;"></ul>
+          <p class="note">Добавляйте статьи в избранное из списка статей.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <a class="scroll-up" href="#top">↑</a>
+
+  <footer class="site-footer">
+    <p>&copy; neVPN — Все права защищены. Поддержка: 
+      <a href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
