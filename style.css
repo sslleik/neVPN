@@ -516,6 +516,7 @@ input:invalid, textarea:invalid { box-shadow: 0 0 0 2px color-mix(in oklab, #ff3
   /* Кнопки и формы: во всю ширину */
   .btn { min-width: 0; }
   .plan .btn, .form-actions .btn, .contact-form .btn { width: 100%; }
+  .contact .btn { width: 100%; }
   .form-actions { width: 100%; }
 
   /* Поля ввода: удобный тап и размер */
