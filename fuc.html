@@ -7,13 +7,14 @@
 
   <link rel="preload" href="PusiaBold.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://api.telegram.org" crossorigin>
+  <link rel="dns-prefetch" href="https://api.telegram.org">
   
 </head>
 
 <body>
   <a id="top"></a>
 
-  <!-- ШАПКА -->
   <header class="site-header" role="banner">
     <div class="header-inner container">
       <a class="logo" href="index.html">
@@ -36,7 +37,6 @@
     </div>
   </header>
 
-  <!-- ГЛАВНЫЙ КОНТЕНТ -->
   <main class="container">
     <section class="hero" style="padding-top:96px;">
       <div class="hero-content">
@@ -45,7 +45,6 @@
       </div>
     </section>
 
-    <!-- Блок тарифов -->
     <section class="plans">
       <div class="plan-cards">
         <article class="plan">
@@ -82,7 +81,6 @@
       </div>
     </section>
 
-    <!-- Дополнительная информация -->
     <section class="about">
       <h2>💡 Как выбрать тариф?</h2>
       <p class="lead">
@@ -91,7 +89,6 @@
       </p>
     </section>
 
-    <!-- Призыв к действию -->
     <section class="contact">
       <h2>Готовы начать?</h2>
       <p>Подключитесь уже сегодня и получите 1 день бесплатно для теста.</p>
@@ -99,17 +96,14 @@
     </section>
   </main>
 
-  <!-- КНОПКА ВВЕРХ -->
   <a class="scroll-up" href="#top">↑</a>
 
-  <!-- ПОДВАЛ -->
   <footer class="site-footer">
     <p>&copy; neVPN — Все права защищены. Поддержка: 
       <a href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a>
     </p>
   </footer>
 
-  <!-- Скрипты -->
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

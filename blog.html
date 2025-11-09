@@ -7,13 +7,14 @@
 
   <link rel="preload" href="PusiaBold.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://api.telegram.org" crossorigin>
+  <link rel="dns-prefetch" href="https://api.telegram.org">
   
 </head>
 
 <body>
   <a id="top"></a>
 
-  <!-- ШАПКА -->
   <header class="site-header" role="banner">
     <div class="header-inner container">
       <a class="logo" href="index.html">
@@ -30,20 +31,17 @@
 
       <div class="controls">
         <button id="menuToggle" class="btn ghost menu-toggle" aria-label="Меню" aria-controls="primary-nav" aria-expanded="false">☰</button>
-        <button id="speedTestBtn" class="btn ghost">Тест скорости</button>
         <button id="themeToggle" class="btn" title="Переключить тему">🌙</button>
       </div>
     </div>
   </header>
 
-  <!-- ГЛАВНЫЙ КОНТЕНТ -->
   <main class="container">
     <section class="hero" style="padding-top:150px;">
       <h1>📰 Блог neVPN</h1>
       <p class="lead">Читайте полезные статьи о безопасности, технологиях и анонимности в интернете.</p>
     </section>
 
-    <!-- ФРЕЙМ С СО СтАТЬЯМИ -->
     <section class="articles-frame">
       <div class="frame">
         <div class="frame-header">
@@ -59,7 +57,6 @@
       </div>
     </section>
 
-    <!-- ПОДПИСКА -->
     <section class="contact">
       <h2>📬 Подписаться на обновления</h2>
       <p>Оставьте почту, чтобы получать новые статьи и советы по кибербезопасности.</p>
@@ -73,16 +70,14 @@
     </section>
   </main>
 
-  <!-- КНОПКА ВВЕРХ -->
   <a class="scroll-up" href="#top">↑</a>
 
-  <!-- ПОДВАЛ -->
   <footer class="site-footer">
     <p>&copy; neVPN — Все права защищены. Поддержка: 
       <a href="https://t.me/sslleik_vd" target="_blank">@sslleik_VD</a>
     </p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

