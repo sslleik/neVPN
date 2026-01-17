@@ -498,6 +498,33 @@ input:invalid, textarea:invalid { box-shadow: 0 0 0 2px color-mix(in oklab, #ff3
   .articles-frame iframe { height: 60vh; min-height: 380px; }
 }
 
+.vpn-closed-banner {
+  background: linear-gradient(135deg, #ff3b30, #ff6b5a);
+  color: #fff;
+  padding: var(--space-4) var(--space-5);
+  text-align: center;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  margin-bottom: var(--space-4);
+}
+
+.vpn-closed-banner strong {
+  font-size: 18px;
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: 800;
+}
+
+.vpn-closed-banner p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
 @media (max-width: 420px) {
   .site-header { width: calc(100% - 20px); margin: var(--space-2) auto 0; border-radius: 26px; }
   .header-inner { padding: 10px 12px; }
@@ -508,4 +535,7 @@ input:invalid, textarea:invalid { box-shadow: 0 0 0 2px color-mix(in oklab, #ff3
   h1 { font-size: clamp(26px, 8vw, 34px); }
   h2 { font-size: clamp(20px, 6vw, 24px); }
   .contact-form input, .contact-form textarea { padding: 12px; }
+  .vpn-closed-banner { padding: var(--space-3) var(--space-4); }
+  .vpn-closed-banner strong { font-size: 16px; }
+  .vpn-closed-banner p { font-size: 14px; }
 }
